@@ -1,0 +1,29 @@
+local character = { x = 100, y = 100, isJumping = false, velocityY = 0 }
+local gravity = -500
+local jumpForce = 300
+
+function love.load()
+    -- Initial setup
+    love.window.setMode(800, 600)
+end
+
+function love.update(dt)
+    if character.isJumping then
+        character.y = character.y - character.velocityY * dt
+        character.velocityY = character.velocityY + gravity * dt
+
+        if character.y >= 100 then
+            character.y = 100
+            character.isJumping = false
+            character.velocityY = 0
+        end
+    end
+
+    if not character.isJumping then
+        character.isJumping = true
+        character.velocityY = jumpForce
+    end
+end
+
+function love.draw()
+    love.graphics.rectangle("fill", character.x, character.y, 50, 50)
